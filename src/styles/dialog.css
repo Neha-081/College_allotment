@@ -1,0 +1,40 @@
+#label{
+    background-color: rgb(234, 247, 248);
+    padding: 8px 0;
+    width: 230px;
+    margin-left: 8px;
+    border-radius: 3px;
+}
+
+.form-group {
+    margin-bottom: 0px;
+}
+
+.form-control {
+    text-decoration: none;
+    border: 0;
+    box-shadow: none; 
+    outline-width: 0;
+}
+
+.form-control:focus {
+    outline: none;
+}
+
+.modal-body {
+    background-color: rgb(218, 213, 213);
+}
+#selectbox{
+    width: 315px;
+    outline: none;
+    border: none;
+    height: 35px;
+    border-radius: 4px;
+}
+#btn{
+    outline: none;
+    margin: 40px 20px 0 20px;
+}
+
+
+

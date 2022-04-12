@@ -1,0 +1,26 @@
+#mainrow{
+    background-color: rgba(221, 250, 255,0.9);
+    font-weight: bold;
+}
+#mainrow span{
+margin-left: 5px;
+
+}.table{
+    width: 1000px;
+    margin: auto;
+}
+.cols{
+    padding:5px 15px;
+    border-radius: 15px;
+    background-color: rgb(201, 245, 230);
+}
+.cols2{
+    padding:5px 15px;
+    border-radius: 15px;
+    background-color: rgb(222, 217, 243);
+}
+.cols3{
+    padding:5px 15px;
+    border-radius: 15px;
+    background-color: rgb(243, 215, 210);
+}
