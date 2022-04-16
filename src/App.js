@@ -59,6 +59,7 @@ function App() {
 
   //function to edit the row
   const handleEditId = (id, el) => {
+    setOk(false)
     setEditId(id)
     setEditData({ ...editData, ...el })
   }
