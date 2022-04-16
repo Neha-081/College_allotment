@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import {  useState } from 'react'
 import './App.css';
 import StudList from './components/StudList';
 import Dialog from './components/Dialog';
@@ -12,22 +12,24 @@ import { AiOutlineAlignLeft, AiFillCaretDown } from 'react-icons/ai';
 import { IoIosArrowDropdown } from 'react-icons/io';
 
 
-const initialData = [
+let initialData = [
   { id: uuidv4(), name: "Rohan", rank: 2, pref1: "IIT Kanpur", pref2: "IIT Madras", pref3: "IIT Hyderabad" },
   { id: uuidv4(), name: "Roshan", rank: 1, pref1: "IIT Bombay", pref2: "IIT Kanpur", pref3: "IIT Hyderabad" },
   { id: uuidv4(), name: "Ankit", rank: 4, pref1: "IIT Roorkee", pref2: "IIT Bombay", pref3: "IIT Hyderabad" },
 ];
 
-const initialCollegeName = [
-  { "id": 1, "name": "IIT Madras", "noOfSeats": 4 },
-  { "id": 2, "name": "IIT Kanpur", "noOfSeats": 2 },
-  { "id": 3, "name": "IIT Bombay", "noOfSeats": 1 },
-  { "id": 4, "name": "IIT Hyderabad", "noOfSeats": 3 },
-  { "id": 5, "name": "IIT Roorkee", "noOfSeats": 1 },
-  { "id": 6, "name": "IIM Ahemedabad", "noOfSeats": 2 },
+let initialCollegeName = [
+  { "id": uuidv4(), "name": "IIT Kanpur", "noOfSeats": 2 },
+  { "id": uuidv4(), "name": "IIT Bombay", "noOfSeats": 1 },
+  { "id": uuidv4(), "name": "IIT Madras", "noOfSeats": 4 },
+  { "id": uuidv4(), "name": "IIT Hyderabad", "noOfSeats": 3 },
+  { "id": uuidv4(), "name": "IIT Roorkee", "noOfSeats": 1 },
+  { "id": uuidv4(), "name": "IIM Ahemedabad", "noOfSeats": 2 },
 ]
 
-const studData = {
+
+
+let studData = {
   id: uuidv4(),
   name: "",
   rank: "",
@@ -53,19 +55,17 @@ function App() {
     pref3: "",
   })
 
+
+
   //function to edit the row
   const handleEditId = (id, el) => {
     setEditId(id)
     setEditData({ ...editData, ...el })
-    const arr = [];
-    for (let key in el) {
-      if (key === "pref1" || key === "pref2" || key === "pref3") {
-        arr.push(el[key])
-      }
-    }
-    setDefault([...defaultSelect, ...arr])
+
 
   }
+
+  //handling edit changes
 
   const handleEditChange = (e) => {
     const { name, value } = e.target;
@@ -74,6 +74,7 @@ function App() {
     setCollegeData(initialCollegeName)
   }
 
+  //handling saving data after edit
   const handleSave = (e) => {
     e.preventDefault()
     const newUserData = [...userData]
@@ -88,9 +89,8 @@ function App() {
 
   }
 
-
+//handling changing formdata
   const handleChange = e => {
-    // e.preventDefault();
     const { name, value } = e.target;
     setFormData(prevState => ({
       ...prevState,
@@ -101,6 +101,7 @@ function App() {
     if (name === "pref1" || name === "pref2" || name === "pref3") {
       setDefault([...defaultSelect, value])
     }
+
   };
 
   const handleSaveData = (e) => {
@@ -110,15 +111,17 @@ function App() {
     ))
     if (formData.name === "" || formData.rank === "" || formData.pref1 === "" || formData.pref2 === "" || formData.pref3 === "") {
       toast.warning("Enter all fields")
-      return
+      // return
     }
     else if (rankExist.length) {
       toast.error("Rank already Exist")
-      return;
+      // return;
     } else {
       setUserData(prev => ([...prev, formData]))
-      setFormData(studData)
+      
     }
+    setFormData(studData)
+    setDefault([])
   }
 
   //sorting for rank
@@ -178,63 +181,43 @@ function App() {
 
 
   // function for handling result
-  const handleResult = () => {
+  let handleResult = () => {
     setOk(true);
-    const result=[]
+    let result = [];
+    let initialCollegeName1 = [
+      { "id": uuidv4(), "name": "IIT Kanpur", "noOfSeats": 2 },
+      { "id": uuidv4(), "name": "IIT Bombay", "noOfSeats": 1 },
+      { "id": uuidv4(), "name": "IIT Madras", "noOfSeats": 4 },
+      { "id": uuidv4(), "name": "IIT Hyderabad", "noOfSeats": 3 },
+      { "id": uuidv4(), "name": "IIT Roorkee", "noOfSeats": 1 },
+      { "id": uuidv4(), "name": "IIM Ahemedabad", "noOfSeats": 2 },
+    ]
     const resData = [...userData];
     resData.sort((a, b) => a.rank - b.rank)
-    let res = false;
-    const instData=initialCollegeName
-    
+
     for (let i = 0; i < resData.length; i++) {
-      for (let k = 1; k < 4; k++) {
-        for (let j = 0; j < instData.length; j++) {
-          if(k===1){
-            if (resData[i].pref1=== instData[j].name && instData[j].noOfSeats > 0) {
-              instData[j].noOfSeats = instData[j].noOfSeats - 1;
-              const newRes = { name: resData[i].name, rank: resData[i].rank, allotSeat: instData[j].name }
-              result.push(newRes)
-              res = true;
-              
-            }
-          }else if(k===2){
-            if (resData[i].pref2=== instData[j].name && instData[j].noOfSeats > 0) {
-              instData[j].noOfSeats = instData[j].noOfSeats - 1;
-              const newRes = { name: resData[i].name, rank: resData[i].rank, allotSeat: instData[j].name }
-              result.push(newRes)
-              res = true;
-              
-            }
-          }else if(k===3){
-            if (resData[i].pref3=== instData[j].name && instData[j].noOfSeats > 0) {
-              instData[j].noOfSeats = instData[j].noOfSeats - 1;
-              const newRes = { name: resData[i].name, rank: resData[i].rank, allotSeat: instData[j].name }
-              result.push(newRes)
-              res = true;
-              
-            }
-          }
+      let allot1 = initialCollegeName1.filter((el) => el.name === resData[i].pref1);
+      let allot2 = initialCollegeName1.filter((el) => el.name === resData[i].pref2);
+      let allot3 = initialCollegeName1.filter((el) => el.name === resData[i].pref3);
 
-          if (res) break;
-
-        }
-        if (res) {
-          break;
-        } 
+      if (allot1[0].noOfSeats >= 1) {
+        allot1[0].noOfSeats = allot1[0].noOfSeats - 1;
+        result.push({ name: resData[i].name, rank: resData[i].rank, allotedSeat: allot1[0].name });
+      } else if (allot2[0].noOfSeats >= 1) {
+        allot2[0].noOfSeats = allot2[0].noOfSeats - 1;
+        result.push({ name: resData[i].name, rank: resData[i].rank, allotedSeat: allot2[0].name });
+      } else if (allot3[0].noOfSeats >= 1) {
+        allot3[0].noOfSeats = allot3[0].noOfSeats - 1;
+        result.push({ name: resData[i].name, rank: resData[i].rank, allotedSeat: allot3[0].name });
+      }else{
+        result.push({ name: resData[i].name, rank: resData[i].rank, allotedSeat: "NA" });
       }
-if(!res){
-    const newRes = { name: resData[i].name, rank: resData[i].rank, allotSeat: "Not Alloted" }
-    result.push(newRes)
-}
-res=false
-
-
 
     }
-setResultData(result)
-    
+    setResultData(result)
 
   }
+
 
 
   return (
@@ -246,7 +229,6 @@ setResultData(result)
         <form>
           <table className="table table-bordered">
             <caption>Students List</caption>
-
             <tbody>
 
               <tr id='mainrow'>
@@ -258,12 +240,9 @@ setResultData(result)
                 <td>Edit</td>
               </tr>
               {userData.map((el) =>
-                el.id === editId ? <EditableRow  handleSave={handleSave} defaultSelect={defaultSelect} handleEditChange={handleEditChange} el={editData} collegeData={collegeData} /> :
-                  <>
-                    <StudList el={el} handleEditId={handleEditId} setUserData={setUserData} />
+                el.id === editId ? <EditableRow key={el.id} handleSave={handleSave} defaultSelect={defaultSelect} handleEditChange={handleEditChange} el={editData} collegeData={collegeData} /> :
 
-                    {/* <Result userData={userData} setUserData={setUserData}/> */}
-                  </>
+                  <StudList el={el} key={el.id} handleEditId={handleEditId} />
 
               )}
             </tbody>

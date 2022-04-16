@@ -56,11 +56,11 @@ function Result({setResultData,resultData}) {
       <td><HiOutlineHashtag /><span>Rank</span><AiFillCaretDown onClick={ResultHandleRank}/></td>
       <td><IoIosArrowDropdown /><span>Alloted College</span><AiFillCaretDown onClick={ResultHandleAllot}/></td>
     </tr>
-    {resultData.map((el)=>(
-      <tr id='table-row' key={el.id}>
+    {resultData.map((el,ind)=>(
+      <tr id='table-row' key={ind}>
         <td>{el.name}</td>
         <td>{el.rank}</td>
-      <td><span className='cols'>{el.allotSeat}</span></td>
+      <td><span className='cols'>{el.allotedSeat}</span></td>
       </tr>
     ))}
 

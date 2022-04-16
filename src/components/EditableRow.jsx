@@ -8,7 +8,7 @@ function EditableRow({ defaultSelect,el,handleEditChange,collegeData,handleSave 
     return (
 <>
 
-                <tr id='table-row' key={el.id}>
+                <tr id='table-row'>
                     <td><input name='name'    type='text' value={el.name} onChange={handleEditChange}/></td>
                     <td><input name='rank' value={el.rank} onChange={handleEditChange}/></td>
                     <td><span className='cols'><select name='pref1' onChange={handleEditChange}>    
@@ -34,13 +34,6 @@ function EditableRow({ defaultSelect,el,handleEditChange,collegeData,handleSave 
 
                 </tr>
         
-
-
-
-
-
-
-
 
 </>
     )

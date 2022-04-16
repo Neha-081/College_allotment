@@ -3,9 +3,7 @@ import '../styles/dialog.css';
 
 
 function Dialog({editId, handleSaveData, collegeData, formData, handleChange, defaultSelect }) {
-    const {
-        name, rank
-    } = formData;
+      const {name,rank} = formData
 
     return (
         <div>
@@ -44,7 +42,8 @@ function Dialog({editId, handleSaveData, collegeData, formData, handleChange, de
                                     <label className="col-sm-1 col-form-label" id='label'>College preference 1</label>
                                     <div className="col-sm-7">
                                         <select id='selectbox' name='pref1' onChange={handleChange} required>
-                                            <option >--Select--</option>
+                                        {formData.pref1===""&&<option >--Select--</option>} 
+
                                             {collegeData.map((e) => (
 
 
@@ -58,7 +57,7 @@ function Dialog({editId, handleSaveData, collegeData, formData, handleChange, de
                                     <label className="col-sm-1 col-form-label" id='label'>College preference 2</label>
                                     <div className="col-sm-7">
                                         <select id='selectbox' name='pref2' onChange={handleChange} required>
-                                            <option >--Select--</option>
+                                           {formData.pref2===""&&<option >--Select--</option>} 
                                             {collegeData.map((e) => (
                                                 <option key={e.id} disabled={defaultSelect.includes(e.name)} value={e.name} >{e.name}</option>
 
@@ -70,7 +69,8 @@ function Dialog({editId, handleSaveData, collegeData, formData, handleChange, de
                                     <label className="col-sm-1 col-form-label" id='label'>College preference 3</label>
                                     <div className="col-sm-7">
                                         <select id='selectbox' name='pref3' onChange={handleChange} required>
-                                            <option>--Select--</option>
+                                        {formData.pref3===""&&<option >--Select--</option>} 
+
                                             {collegeData.map((e) => (
                                                 <option key={e.id} disabled={defaultSelect.includes(e.name)} value={e.name} >{e.name}</option>
 

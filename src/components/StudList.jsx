@@ -3,13 +3,9 @@ import {BsPencilSquare} from 'react-icons/bs'
 
 
 function StudList({ handleEditId,el }) {
-
- 
-
   return (
  <>
-
-      <tr id='table-row' key={el.id}>
+      <tr id='table-row' >
         <td>{el.name}</td>
         <td>{el.rank}</td>
       <td><span className='cols'>{el.pref1}</span></td>

@@ -24,3 +24,12 @@ margin-left: 5px;
     border-radius: 15px;
     background-color: rgb(243, 215, 210);
 }
+
+
+@media only screen and (max-width: 400px) {
+.cols, .cols2, .cols3{
+    font-size: 12px;
+    padding: 0;
+    border: none;
+}
+}
