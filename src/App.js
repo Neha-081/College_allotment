@@ -24,7 +24,7 @@ let initialCollegeName = [
   { "id": uuidv4(), "name": "IIT Madras", "noOfSeats": 4 },
   { "id": uuidv4(), "name": "IIT Hyderabad", "noOfSeats": 3 },
   { "id": uuidv4(), "name": "IIT Roorkee", "noOfSeats": 1 },
-  { "id": uuidv4(), "name": "IIM Ahemedabad", "noOfSeats": 2 },
+  { "id": uuidv4(), "name": "IIT Ahemedabad", "noOfSeats": 2 },
 ]
 
 
@@ -44,6 +44,7 @@ function App() {
   const [userData, setUserData] = useState([...initialData])
   const [defaultSelect, setDefault] = useState([])
   const [formData, setFormData] = useState(studData)
+  const [check,setCheck]=useState({})
   const [editId, setEditId] = useState(null)
   const [ok, setOk] = useState(false)
   const [resultData, setResultData] = useState([])
@@ -67,9 +68,20 @@ function App() {
 
   //handling edit changes
 
-  const handleEditChange = (e) => {
+  const handleEditChange = (e,rowData) => {
+
     const { name, value } = e.target;
     const newEditFormData = { ...editData, [name]: value }
+    
+    check.pref1=rowData.pref1
+    check.pref2=rowData.pref2
+    check.pref3=rowData.pref3
+    if(name==="pref1" || name==="pref2" || name==="pref3" ){
+      check[name]=value;
+      const filterEditArr=Object.values(check);
+      setDefault(filterEditArr)
+    }
+
     setEditData(newEditFormData)
     setCollegeData(initialCollegeName)
   }
@@ -79,10 +91,12 @@ function App() {
     e.preventDefault()
     const newUserData = [...userData]
     for (let i = 0; i < newUserData.length; i++) {
+  
       if (newUserData[i].id === editId) {
         newUserData[i] = editData
       }
     }
+  
     setUserData(newUserData)
     setEditId(null)
     setDefault([])
@@ -99,7 +113,17 @@ function App() {
 
     //for disabling the selections
     if (name === "pref1" || name === "pref2" || name === "pref3") {
-      setDefault([...defaultSelect, value])
+      if (check.pref1 !== undefined || check.pref2 !== undefined|| check.pref3 !== undefined) {
+        check[name] = value
+        const filterArr = Object.values(check)
+        setDefault(filterArr)
+        
+      } else {
+        check[name] = value;
+        const filterArr = Object.values(check)
+      setDefault(filterArr)
+      }
+      setCheck(check)
     }
 
   };
@@ -240,7 +264,7 @@ function App() {
                 <td>Edit</td>
               </tr>
               {userData.map((el) =>
-                el.id === editId ? <EditableRow key={el.id} handleSave={handleSave} defaultSelect={defaultSelect} handleEditChange={handleEditChange} el={editData} collegeData={collegeData} /> :
+                el.id === editId ? <EditableRow key={el.id} handleSave={handleSave} handleEditChange={handleEditChange} el={editData} collegeData={collegeData} /> :
 
                   <StudList el={el} key={el.id} handleEditId={handleEditId} />
 
