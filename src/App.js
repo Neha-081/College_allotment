@@ -18,15 +18,6 @@ let initialData = [
   { id: uuidv4(), name: "Ankit", rank: 4, pref1: "IIT Roorkee", pref2: "IIT Bombay", pref3: "IIT Hyderabad" },
 ];
 
-let initialCollegeName = [
-  { "id": uuidv4(), "name": "IIT Kanpur", "noOfSeats": 2 },
-  { "id": uuidv4(), "name": "IIT Bombay", "noOfSeats": 1 },
-  { "id": uuidv4(), "name": "IIT Madras", "noOfSeats": 4 },
-  { "id": uuidv4(), "name": "IIT Hyderabad", "noOfSeats": 3 },
-  { "id": uuidv4(), "name": "IIT Roorkee", "noOfSeats": 1 },
-  { "id": uuidv4(), "name": "IIT Ahemedabad", "noOfSeats": 2 },
-]
-
 
 
 let studData = {
@@ -39,6 +30,14 @@ let studData = {
 }
 
 function App() {
+  var initialCollegeName = [
+    { "id": uuidv4(), "name": "IIT Kanpur", "noOfSeats": 2 },
+    { "id": uuidv4(), "name": "IIT Bombay", "noOfSeats": 1 },
+    { "id": uuidv4(), "name": "IIT Madras", "noOfSeats": 4 },
+    { "id": uuidv4(), "name": "IIT Hyderabad", "noOfSeats": 3 },
+    { "id": uuidv4(), "name": "IIT Roorkee", "noOfSeats": 1 },
+    { "id": uuidv4(), "name": "IIT Ahemedabad", "noOfSeats": 2 },
+  ]
 
   const [collegeData, setCollegeData] = useState(initialCollegeName)
   const [userData, setUserData] = useState([...initialData])
@@ -62,8 +61,6 @@ function App() {
   const handleEditId = (id, el) => {
     setEditId(id)
     setEditData({ ...editData, ...el })
-
-
   }
 
   //handling edit changes
@@ -110,12 +107,11 @@ function App() {
       ...prevState,
       [name]: value
     }));
-
-    //for disabling the selections
+//for disabling the selections
     if (name === "pref1" || name === "pref2" || name === "pref3") {
-      if (check.pref1 !== undefined || check.pref2 !== undefined|| check.pref3 !== undefined) {
-        check[name] = value
-        const filterArr = Object.values(check)
+      if (check.pref1 !== undefined || check.pref2 !== undefined|| check.pref3 !== undefined) {   //checking if preferences exist
+        check[name] = value       // overwriting the existing preferneces
+        const filterArr = Object.values(check)  //return an array of selected preferneces values
         setDefault(filterArr)
         
       } else {
@@ -129,17 +125,14 @@ function App() {
   };
 
   const handleSaveData = (e) => {
-    e.preventDefault()
     const rankExist = userData.filter((el) => (
       Number(el.rank) === Number(formData.rank)
     ))
     if (formData.name === "" || formData.rank === "" || formData.pref1 === "" || formData.pref2 === "" || formData.pref3 === "") {
       toast.warning("Enter all fields")
-      // return
     }
     else if (rankExist.length) {
       toast.error("Rank already Exist")
-      // return;
     } else {
       setUserData(prev => ([...prev, formData]))
       
@@ -203,36 +196,33 @@ function App() {
   }
 
 
+  const hideResults=()=>{
+    setOk(false)
+  }
+
 
   // function for handling result
   let handleResult = () => {
     setOk(true);
     let result = [];
-    let initialCollegeName1 = [
-      { "id": uuidv4(), "name": "IIT Kanpur", "noOfSeats": 2 },
-      { "id": uuidv4(), "name": "IIT Bombay", "noOfSeats": 1 },
-      { "id": uuidv4(), "name": "IIT Madras", "noOfSeats": 4 },
-      { "id": uuidv4(), "name": "IIT Hyderabad", "noOfSeats": 3 },
-      { "id": uuidv4(), "name": "IIT Roorkee", "noOfSeats": 1 },
-      { "id": uuidv4(), "name": "IIM Ahemedabad", "noOfSeats": 2 },
-    ]
     const resData = [...userData];
     resData.sort((a, b) => a.rank - b.rank)
 
     for (let i = 0; i < resData.length; i++) {
-      let allot1 = initialCollegeName1.filter((el) => el.name === resData[i].pref1);
-      let allot2 = initialCollegeName1.filter((el) => el.name === resData[i].pref2);
-      let allot3 = initialCollegeName1.filter((el) => el.name === resData[i].pref3);
+      
+      let checkPref1 = initialCollegeName.filter((el) => el.name === resData[i].pref1);
+      let checkPref2 = initialCollegeName.filter((el) => el.name === resData[i].pref2);
+      let checkPref3 = initialCollegeName.filter((el) => el.name === resData[i].pref3);
 
-      if (allot1[0].noOfSeats >= 1) {
-        allot1[0].noOfSeats = allot1[0].noOfSeats - 1;
-        result.push({ name: resData[i].name, rank: resData[i].rank, allotedSeat: allot1[0].name });
-      } else if (allot2[0].noOfSeats >= 1) {
-        allot2[0].noOfSeats = allot2[0].noOfSeats - 1;
-        result.push({ name: resData[i].name, rank: resData[i].rank, allotedSeat: allot2[0].name });
-      } else if (allot3[0].noOfSeats >= 1) {
-        allot3[0].noOfSeats = allot3[0].noOfSeats - 1;
-        result.push({ name: resData[i].name, rank: resData[i].rank, allotedSeat: allot3[0].name });
+      if (checkPref1[0].noOfSeats >= 1) {
+        checkPref1[0].noOfSeats = checkPref1[0].noOfSeats - 1;
+        result.push({ name: resData[i].name, rank: resData[i].rank, allotedSeat: checkPref1[0].name });
+      } else if (checkPref2[0].noOfSeats >= 1) {
+        checkPref2[0].noOfSeats = checkPref2[0].noOfSeats - 1;
+        result.push({ name: resData[i].name, rank: resData[i].rank, allotedSeat: checkPref2[0].name });
+      } else if (checkPref3[0].noOfSeats >= 1) {
+        checkPref3[0].noOfSeats = checkPref3[0].noOfSeats - 1;
+        result.push({ name: resData[i].name, rank: resData[i].rank, allotedSeat: checkPref3[0].name });
       }else{
         result.push({ name: resData[i].name, rank: resData[i].rank, allotedSeat: "NA" });
       }
@@ -274,9 +264,12 @@ function App() {
 
         </form>
         <Dialog editId={editId} handleSaveData={handleSaveData} collegeData={collegeData} formData={formData} handleChange={handleChange} defaultSelect={defaultSelect} handleResult={handleResult} />
+        
+        {ok?<button id='btn' className='btn btn-primary' onClick={hideResults}>Hide Results</button>:
         <button disabled={editId} onClick={handleResult} id='btn' className="btn btn-primary">Get Results</button>
-      </div>
-      {ok ? <Result setResultData={setResultData} resultData={resultData} /> : null}
+              }
+        </div>
+      {ok ? <Result hideResults={hideResults} setResultData={setResultData} resultData={resultData} /> : null}
     </div>
   );
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { HiOutlineHashtag } from 'react-icons/hi';
 import { AiOutlineAlignLeft,AiFillCaretDown } from 'react-icons/ai';
 import { IoIosArrowDropdown } from 'react-icons/io';
+
 import '../styles/table.css'
 
 
@@ -37,7 +38,7 @@ function Result({setResultData,resultData}) {
   const ResultHandleAllot = () => {
     setResultData(() => {
       return [...resultData.sort((a, b) => {
-        return strings(a.allotSeat, b.allotSeat)
+        return strings(a.allotedSeat, b.allotedSeat)
       }
       )]
     })
@@ -47,12 +48,12 @@ function Result({setResultData,resultData}) {
   return (
     <div>
          <table className="table table-bordered">
+ 
   <caption>Students List</caption>
-
   <tbody>
 
   <tr id='mainrow'>
-      <td><AiOutlineAlignLeft /><span>Student  Name</span><AiFillCaretDown onClick={ResultHandleName} /></td>
+      <td><AiOutlineAlignLeft /><span>Student  Name</span><AiFillCaretDown  onClick={ResultHandleName} /></td>
       <td><HiOutlineHashtag /><span>Rank</span><AiFillCaretDown onClick={ResultHandleRank}/></td>
       <td><IoIosArrowDropdown /><span>Alloted College</span><AiFillCaretDown onClick={ResultHandleAllot}/></td>
     </tr>
